@@ -5,10 +5,11 @@
 create_default() {
   echo "Setting up..."
   
-  mkdir -v -p {"/run/mysqld","/var/log/mysql"}
-
   for dir in "$DOCKER_DB_MOUNTPOINT" "/var/run/mysqld" "/var/log/mysql"
   do
+    if [ ! -d "$dir" ];then
+      mkdir -v -p "$dir"
+    fi
     chmod -R 0755 "$dir"
     chown -R "mysql" "$dir"
   done
